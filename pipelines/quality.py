@@ -54,6 +54,8 @@ df = pd.DataFrame(report)
 df.to_csv("quality_report.csv", index_label="metric")
 print(df)
 failed = df[df["silver"] < 0.98]
+# : si une métrique de la colonne silver est sous 0.98, afficher lesquelles et quitter avec sys.exit(1).
+#        make et Airflow s'arrêtent alors avant le load : gold garde la version d'hier.
 if not failed.empty:
     print("Quality check failed on silver:")
     print(failed["silver"])
